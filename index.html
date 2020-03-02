@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Shopping Cart</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
+   
+   <link href="style.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+   <section>
+      <div class="container" id="body">
+         <div class="cart">
+            <div class="col-md-12 col-lg-10 mx-auto">
+               <div class="cart-item" id='phone'>
+                  <div class="row">
+                     <div class="col-md-7 center-item">
+                        <img src="images/product-1.png" alt="">
+                        <h5>iPhone 11 128GB Black</h5>
+                     </div>
+
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button class="btn btn-default"><i id='mobile-minus-button' class="fas fa-minus"></i></button>
+                           <input type="text" class="form-control text-center" value="1" id='mobile-value'>
+                           <button class="btn btn-default"><i id='mobile-plus-button' class="fas fa-plus"></i></button>
+                        </div>
+                        <h5>$ <span id='mobile-price'>1219</span></h5>
+                        <img src="images/remove.png" alt="" class="remove-item" id='remove-product-1'>
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item" id='cart'>
+                  <div class="row">
+                     <div class="col-md-7 center-item mx-auto">
+                        <img src="images/product-2.png" alt="">
+                        <h5>iPhone 11 Silicone Case - Black</h5>
+                     </div>
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button class="btn btn-default"><i id='case-minus-button' class="fas fa-minus"></i></button>
+                           <input type="text" class="form-control text-center" value="1" id='case-value'>
+                           <button class="btn btn-default"><i id='case-plus-button' class="fas fa-plus"></i></button>
+
+                        </div>
+                        <h5>$ <span id='case-price'>59</span></h5>
+                        <img src="images/remove.png" alt="" class="remove-item" id='remove-product-2'>
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+
+                     <div class="col-md-8">
+                        <h5>Subtotal: </h5>
+                        <h5>Tax-2% including:</h5>
+                        <h5>Total:</h5>
+                     </div>
+
+                     <div class="col-md-4 status">
+                        <h5>$ <span id='subtotal'>1278</span></h5>
+                        <h5>$ <span id='tax'>25.56</span></h5>
+                        <h5>$ <span id='total'>1278</span></h5>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-12 pt-4 pb-4">
+                  <button type="button" class="btn btn-success check-out" id='checkout'>Check Out</button>
+               </div>
+            </div>
+         </div>
+      </div>
+      <h2 id="message-after-checkout"> Success!!!
+      <br>
+      Thanks For Your order! <h2>
+   </section>
+   
+   <script>
+      
+      var subtotalString= document.getElementById('subtotal').innerText;
+      var subtotal= parseFloat(subtotalString);
+
+      function cart(pId, mId, product, price_id){
+
+         const minusBtn = document.getElementById(mId);
+         const plusBtn = document.getElementById(pId);
+
+         var value = document.getElementById(product).value;
+         var price= document.getElementById(price_id).innerText;
+         var val= parseInt(value);
+         var price=parseFloat(price);  
+         
+         minusBtn.addEventListener('click', function(){
+
+            if(val>0){
+               val = val - 1;
+               subtotal=subtotal-price;
+               result(val, subtotal, product, price_id)
+            }
+         });
+         
+         
+         plusBtn.addEventListener('click', function(){
+            val = val + 1;
+            subtotal = subtotal + price;
+            result(val, subtotal, product, price_id)
+         });
+ 
+         function result(val, subtotal, product, price_id){
+            var totalPrice = val*price;
+            var tax= 2*subtotal/100;
+            var total= subtotal+tax;
+            document.getElementById(product).value = val;
+            document.getElementById(price_id).innerText = totalPrice;
+            document.getElementById('subtotal').innerText= subtotal;
+            document.getElementById('tax').innerText= tax;
+            document.getElementById('total').innerText= total;
+         }
+      }
+
+ cart('mobile-plus-button', 'mobile-minus-button', 'mobile-value', 'mobile-price'); cart('case-plus-button', 'case-minus-button', 'case-value', 'case-price');
+
+      var value_check = document.getElementById("checkout");
+      value_check.addEventListener("click", function(){
+         
+         document.getElementById('body').style.display="none";
+         document.getElementById('message-after-checkout').style.display="block";
+      })
+      
+   </script>
+
+</body>
+</html>
